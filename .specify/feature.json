@@ -1,4 +1,3 @@
 {
-  "feature_directory": "specs/001-cash-flow-tracker",
-  "plan_file": "specs/001-cash-flow-tracker/plan.md"
+  "feature_directory": "specs/003-emergency-fund"
 }
