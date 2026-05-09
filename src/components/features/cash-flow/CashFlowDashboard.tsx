@@ -17,14 +17,15 @@ import { SpendingBreakdown } from './SpendingBreakdown'
 import { useToast } from './Toast'
 import type { TransactionInput } from '@/types'
 
-// Demo household ID for development
-const DEMO_HOUSEHOLD_ID = '00000000-0000-0000-0000-000000000001'
+// TODO: Replace with actual household ID from Supabase
+const DEMO_HOUSEHOLD_ID = '963a25fc-553a-48b2-9439-d093984015f2'
 
 export function CashFlowDashboard() {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [transactionType, setTransactionType] = useState<'income' | 'expense'>('expense')
   const [isLoading, setIsLoading] = useState(true)
   const [categoryTypeFilter, setCategoryTypeFilter] = useState<'fixed' | 'variable' | null>(null)
+  const [selectedDate, setSelectedDate] = useState<string | undefined>(undefined)
 
   const { showToast } = useToast()
   
@@ -58,19 +59,28 @@ export function CashFlowDashboard() {
       const txs = await getTransactions(DEMO_HOUSEHOLD_ID, { limit: 50 })
       setTransactions(txs)
       
-      // Load balance
-      const bal = await getBalance(DEMO_HOUSEHOLD_ID)
+      // Load balance (with optional date filter)
+      const bal = await getBalance(DEMO_HOUSEHOLD_ID, selectedDate)
       setBalance(bal)
     } catch (error) {
       console.error('Failed to load data:', error)
     } finally {
       setIsLoading(false)
     }
-  }, [setUsers, setCategories, setTransactions, setBalance])
+  }, [setUsers, setCategories, setTransactions, setBalance, selectedDate])
 
   useEffect(() => {
     loadData()
   }, [loadData])
+
+  // Reload balance when date changes
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const bal = await getBalance(DEMO_HOUSEHOLD_ID, selectedDate)
+      setBalance(bal)
+    }
+    fetchBalance()
+  }, [selectedDate, setBalance])
 
   // Real-time subscription for balance updates
   useEffect(() => {
@@ -156,7 +166,12 @@ export function CashFlowDashboard() {
         </div>
 
         {/* Balance */}
-        <BalanceDisplay balance={balance} isLoading={isLoading} />
+        <BalanceDisplay 
+          balance={balance} 
+          isLoading={isLoading}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+        />
 
         {/* Quick Action Buttons */}
         <div className="flex gap-3">
