@@ -93,7 +93,7 @@
 - [x] T028 [US2] Create Zustand store in src/hooks/useCashFlow.ts for current user state
 - [x] T029 [US2] Update TransactionForm to include user attribution
 - [x] T030 [US2] Add account filter to TransactionList
-- [ ] T031 [US2] Write integration tests for dual-user transaction sync
+- [x] T031 [US2] Write integration tests for dual-user transaction sync
 
 ---
 
@@ -113,10 +113,10 @@
 
 - [x] T032 [P] [US4] Create BalanceDisplay component in src/components/features/cash-flow/BalanceDisplay.tsx using Tremor KPI Card
 - [x] T033 [P] [US4] Create balance query function in src/lib/supabase/queries/balance.ts
-- [ ] T034 [US4] Implement real-time subscription for balance updates
+- [x] T034 [US4] Implement real-time subscription for balance updates
 - [x] T035 [US4] Add negative balance styling (red color)
-- [ ] T036 [US4] Implement historical balance viewing by date
-- [ ] T037 [US4] Write unit tests for balance calculation logic
+- [x] T036 [US4] Implement historical balance viewing by date
+- [x] T037 [US4] Write unit tests for balance calculation logic
 
 ---
 
@@ -150,9 +150,6 @@
 - [x] T046 Implement dark mode support
 - [x] T047 Add loading states and skeleton components
 - [x] T048 Handle edge cases (future-dated transactions styling, large number formatting)
-- [x] T034 [US4] Implement real-time subscription for balance updates
-- [x] T036 [US4] Implement historical balance viewing by date
-- [x] T037 [US4] Write unit tests for balance calculation logic
 - [x] T049 End-to-end testing of complete transaction flow
 - [x] T050 Performance optimization (debounce, memoization)
 
