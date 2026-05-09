@@ -1,50 +1,67 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Household Financial Tracker Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Mobile-First & Responsive Excellence
+All UI development must strictly begin with mobile screens (Android/iPhone) utilizing Tailwind's fluid stacking and safe-area insets. Implementation must dynamically transition to a 2-column Bento grid for tablets (`md:`) and a 3+ column Bento grid with a persistent sidebar for desktops (`lg:`, `xl:`). Minimum 44x44px touch targets are mandatory for all interactive elements to ensure mobile ergonomics. Mobile views must utilize a Bottom Navigation Bar and a Floating Action Button (FAB) for transaction inputs.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. High-Fidelity & Data-Driven UI
+Strictly utilize **Shadcn/ui** for foundational interactive components (forms, modals, buttons, dropdowns) and **Tremor** for all data visualization (dashboard metrics, charts, KPI cards). Custom styling must be done via Tailwind CSS. Native Dark Mode support must be implemented from the start. All financial figures must utilize high-contrast typography and the `tabular-nums` utility to ensure perfect vertical alignment in tables and lists.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Strict Test-Driven Development (TDD)
+TDD is mandatory and non-negotiable. Tests must be written before implementation code. The workflow strictly enforces the Red-Green-Refactor cycle. Scope is exclusively limited to Unit Testing (UT) and Integration Testing (IT) utilizing **Vitest** and **React Testing Library (RTL)**. AI generation must output the `.test.ts` or `.test.tsx` file to define expected behavior before generating the actual component or utility logic.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Financial Precision & Integrity
+Handle all monetary values with absolute precision; strictly avoid floating-point arithmetic errors in calculations. Data validation for transaction entries must be rigorous, precise, and easily reconcilable, meeting professional accounting standards. The system architecture must natively support real-time multi-user synchronization (e.g., dual-user household) writing to a single, unified database ledger.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Serverless & Zero-Cost Architecture
+The application must strictly adhere to a zero-cost deployment model utilizing **Next.js (App Router)** deployed on **Vercel**, backed by **Supabase** (PostgreSQL & Auth). Leverage React Server Components for data fetching to minimize client-side bundle size, and utilize Next.js Server Actions or API routes for backend logic.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### VI. Pragmatism Over Perfection (YAGNI & KISS)
+- **YAGNI (You Aren't Gonna Need It):** Only build features strictly required for the current MVP phase. Do not over-engineer database schemas or system architecture for future, speculative use cases.
+- **KISS (Keep It Simple, Stupid):** Prioritize explicit, flat, and highly readable code to facilitate accurate AI generation. Avoid unnecessary or complex high-level abstractions. 
+- **Selective DRY:** Strictly apply DRY to pure financial mathematical logic (e.g., compound interest, percentage calculations) by centralizing them in utility files. However, tolerate minor duplication in UI components to avoid overly complex, "prop-heavy" generic components.
+- **Single Responsibility (SOLID's 'S'):** Limit SOLID principles primarily to the Single Responsibility Principle. Ensure every React component or utility function does exactly one thing well. Avoid heavy OOP design patterns.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### VII. Database Design & Data Integrity (Supabase/PostgreSQL)
+- **Monetary Storage:** All currency values must be stored using the exact precision `NUMERIC(14,2)` or integer cents (`BIGINT`). Never use `FLOAT` or `REAL` to prevent rounding errors.
+- **Primary Keys:** All database tables must use `UUID` (v4) generated by the database as primary keys, never auto-incrementing integers.
+- **Audit-Ready Records (Soft Deletes):** Financial records (transactions, budgets) must never be hard-deleted. Implement a `deleted_at` timestamp column for soft deletes to maintain a strict audit trail. All tables must include `created_at` and `updated_at` timestamps.
+- **Security & Tenancy:** Row Level Security (RLS) is mandatory on all Supabase tables. Queries must automatically scope data to the authenticated user's household ID to ensure cross-user data isolation.
+- **Table Naming:** Tables must be named in plural, lower `snake_case` (e.g., `transactions`, `categories`, `financial_goals`).
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Technical & Coding Constraints
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- **Language & Typing:** TypeScript is mandatory. Strict mode must be enabled. The use of `any` types is strictly prohibited.
+- **State Management:** Prioritize Server Components. Use lightweight client state (such as React Context or Zustand) only when strictly necessary for complex UI interactivity.
+- **Clean Code:** Components must be functional, small, modular, and focused on a single responsibility. Avoid deeply nested ternaries. Extract complex business logic (e.g., 4% rule calculations, compound interest, savings rates) into pure, independently testable utility functions.
+- **Error Handling:** Fail gracefully. Implement generic error boundaries and specific, clear toast notifications for all user actions (success/failure/validation errors).
+- **AI Output & Behavior (No Lazy Coding):**
+  - The AI must output COMPLETE code blocks. The use of placeholders like `// ... existing code` or `// ... implement logic here` is strictly prohibited.
+  - The AI must not delete existing comments or code blocks unless explicitly instructed to refactor that specific section.
+- **Naming Conventions:**
+  - Database schema and PostgreSQL columns must use `snake_case` (e.g., `transaction_date`, `category_id`).
+  - TypeScript variables, functions, and props must use `camelCase` (e.g., `transactionDate`, `categoryId`).
+  - React Components must use `PascalCase` (e.g., `TransactionForm.tsx`).
+- **Project Structure Enforcement:**
+  - `/app`: Next.js App Router pages and API routes only.
+  - `/components/ui`: Strictly for Shadcn/Tremor base components.
+  - `/components/features`: For domain-specific components (e.g., `CashFlowDashboard`, `TransactionList`).
+  - `/lib/utils`: For pure functions, financial calculations, and formatting.
+  - `/lib/supabase`: For database clients and queries.
+- **Observability & Logging:**
+  - **Structured Logging:** Use structured, JSON-friendly logging for server-side actions (Next.js API routes/Server Actions) to ensure logs are easily searchable in the Vercel dashboard. (e.g., `console.error(JSON.stringify({ event: 'TRANSACTION_FAIL', error: err.message }))`).
+  - **Actionable Scope:** Log critical state changes (e.g., transaction creation, budget updates) and actionable errors. Do not pollute the console with trivial render logs or successful fetch messages.
+  - **Security & Sanitization:** Never log sensitive personal data, authentication tokens, or raw credentials. Always sanitize payloads before logging.
+
+## Development & Testing Workflow
+
+- **Unit Testing (UT) Focus:** Isolate pure business logic and test exhaustively. Tests must cover edge cases, negative numbers, zero values, and unexpected inputs in financial calculations.
+- **Integration Testing (IT) Focus:** Test the flow between UI components and Next.js Server Actions/API Routes. Mock database interactions and external calls using appropriate mocking strategies (e.g., `vi.mock` for server actions). Ensure UI state updates correctly reflect database changes.
+- **Component Colocation:** Test files must be colocated directly with their corresponding implementation files (e.g., `Button.tsx` and `Button.test.tsx` in the same directory) to maintain high visibility and modularity.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This Constitution supersedes all other general coding practices. All generated code and PRs must explicitly verify compliance with the TDD mandates, responsive breakpoints, the specified UI library constraints (Shadcn + Tremor), and the YAGNI/KISS pragmatism principle. Architectural complexity must be continually justified against the core principle of simplicity. Deviations from financial precision rules or tech stack choices require explicit developer approval and documentation.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.2.0 | **Ratified**: 2026-05-09 | **Last Amended**: 2026-05-09
