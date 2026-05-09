@@ -23,13 +23,13 @@
 
 *Project initialization and dependency installation*
 
-- [ ] T001 Initialize Next.js project with TypeScript, Tailwind, ESLint, App Router
-- [ ] T002 Install Supabase dependencies (@supabase/supabase-js, @supabase/ssr)
-- [ ] T003 Install UI dependencies (Shadcn/ui, Tremor, Lucide React, Zustand)
-- [ ] T004 Install testing dependencies (Vitest, React Testing Library, jsdom)
-- [ ] T005 Configure Shadcn/ui with default theme
-- [ ] T006 Create .env.local template with Supabase environment variables
-- [ ] T007 Configure Vitest and create test setup file
+- [x] T001 Initialize Next.js project with TypeScript, Tailwind, ESLint, App Router
+- [x] T002 Install Supabase dependencies (@supabase/supabase-js, @supabase/ssr)
+- [x] T003 Install UI dependencies (Shadcn/ui, Tremor, Lucide React, Zustand)
+- [x] T004 Install testing dependencies (Vitest, React Testing Library, jsdom)
+- [x] T005 Configure Shadcn/ui with default theme
+- [x] T006 Create .env.local template with Supabase environment variables
+- [x] T007 Configure Vitest and create test setup file
 
 ---
 
@@ -37,15 +37,15 @@
 
 *Database setup and core infrastructure (blocking prerequisites for all user stories)*
 
-- [ ] T008 [P] Create Supabase database schema (households, profiles, categories, transactions tables)
-- [ ] T009 [P] Enable Row Level Security (RLS) on all tables with household-based policies
-- [ ] T010 [P] Seed default categories (Fixed: Installments, Electricity, School Fees, Insurance; Variable: Dining Out, Hobbies, Groceries, Transportation)
-- [ ] T011 Create TypeScript interfaces in src/types/index.ts (Transaction, Category, Profile, Household)
-- [ ] T012 Create Supabase client in src/lib/supabase/client.ts (browser client)
-- [ ] T013 Create Supabase server client in src/lib/supabase/server.ts
-- [ ] T014 Create utility functions in src/lib/utils/currency.ts (formatRp, formatCompactRp)
-- [ ] T015 Create cn utility in src/lib/utils/cn.ts
-- [ ] T016 Create balance calculation utility in src/lib/utils/calculations.ts
+- [x] T008 [P] Create Supabase database schema (households, profiles, categories, transactions tables)
+- [x] T009 [P] Enable Row Level Security (RLS) on all tables with household-based policies
+- [x] T010 [P] Seed default categories (Fixed: Installments, Electricity, School Fees, Insurance; Variable: Dining Out, Hobbies, Groceries, Transportation)
+- [x] T011 Create TypeScript interfaces in src/types/index.ts (Transaction, Category, Profile, Household)
+- [x] T012 Create Supabase client in src/lib/supabase/client.ts (browser client)
+- [x] T013 Create Supabase server client in src/lib/supabase/server.ts
+- [x] T014 Create utility functions in src/lib/utils/currency.ts (formatRp, formatCompactRp)
+- [x] T015 Create cn utility in src/lib/utils/cn.ts
+- [x] T016 Create balance calculation utility in src/lib/utils/calculations.ts
 
 ---
 
@@ -63,15 +63,15 @@
 
 ### Implementation
 
-- [ ] T017 [P] [US1] Create TransactionForm component in src/components/features/cash-flow/TransactionForm.tsx
-- [ ] T018 [P] [US1] Create CategorySelect component in src/components/features/cash-flow/CategorySelect.tsx
-- [ ] T019 [US1] Create Server Action createTransaction in src/lib/supabase/actions/transactions.ts
-- [ ] T020 [US1] Create transaction query functions in src/lib/supabase/queries/transactions.ts
-- [ ] T021 [US1] Create TransactionList component in src/components/features/cash-flow/TransactionList.tsx
-- [ ] T022 [US1] Implement validation in TransactionForm (required fields check)
-- [ ] T023 [US1] Add toast notifications for success/error feedback
-- [ ] T024 [US1] Write unit tests for currency formatting utilities
-- [ ] T025 [US1] Write integration tests for transaction creation flow
+- [x] T017 [P] [US1] Create TransactionForm component in src/components/features/cash-flow/TransactionForm.tsx
+- [x] T018 [P] [US1] Create CategorySelect component in src/components/features/cash-flow/CategorySelect.tsx
+- [x] T019 [US1] Create Server Action createTransaction in src/lib/supabase/actions/transactions.ts
+- [x] T020 [US1] Create transaction query functions in src/lib/supabase/queries/transactions.ts
+- [x] T021 [US1] Create TransactionList component in src/components/features/cash-flow/TransactionList.tsx
+- [x] T022 [US1] Implement validation in TransactionForm (required fields check)
+- [x] T023 [US1] Add toast notifications for success/error feedback
+- [x] T024 [US1] Write unit tests for currency formatting utilities
+- [x] T025 [US1] Write integration tests for transaction creation flow
 
 ---
 
@@ -88,11 +88,11 @@
 
 ### Implementation
 
-- [ ] T026 [P] [US2] Create UserSwitcher component in src/components/features/cash-flow/UserSwitcher.tsx
-- [ ] T027 [P] [US2] Create profile query functions in src/lib/supabase/queries/profiles.ts
-- [ ] T028 [US2] Create Zustand store in src/hooks/useCashFlow.ts for current user state
-- [ ] T029 [US2] Update TransactionForm to include user attribution
-- [ ] T030 [US2] Add account filter to TransactionList
+- [x] T026 [P] [US2] Create UserSwitcher component in src/components/features/cash-flow/UserSwitcher.tsx
+- [x] T027 [P] [US2] Create profile query functions in src/lib/supabase/queries/profiles.ts
+- [x] T028 [US2] Create Zustand store in src/hooks/useCashFlow.ts for current user state
+- [x] T029 [US2] Update TransactionForm to include user attribution
+- [x] T030 [US2] Add account filter to TransactionList
 - [ ] T031 [US2] Write integration tests for dual-user transaction sync
 
 ---
@@ -111,10 +111,10 @@
 
 ### Implementation
 
-- [ ] T032 [P] [US4] Create BalanceDisplay component in src/components/features/cash-flow/BalanceDisplay.tsx using Tremor KPI Card
-- [ ] T033 [P] [US4] Create balance query function in src/lib/supabase/queries/balance.ts
+- [x] T032 [P] [US4] Create BalanceDisplay component in src/components/features/cash-flow/BalanceDisplay.tsx using Tremor KPI Card
+- [x] T033 [P] [US4] Create balance query function in src/lib/supabase/queries/balance.ts
 - [ ] T034 [US4] Implement real-time subscription for balance updates
-- [ ] T035 [US4] Add negative balance styling (red color)
+- [x] T035 [US4] Add negative balance styling (red color)
 - [ ] T036 [US4] Implement historical balance viewing by date
 - [ ] T037 [US4] Write unit tests for balance calculation logic
 
@@ -132,11 +132,11 @@
 
 ### Implementation
 
-- [ ] T038 [P] [US3] Update CategorySelect to show Fixed/Variable labels
-- [ ] T039 [P] [US3] Create category query functions in src/lib/supabase/queries/categories.ts
-- [ ] T040 [US3] Add Fixed/Variable filter to TransactionList
-- [ ] T041 [US3] Create spending breakdown component using Tremor charts
-- [ ] T042 [US3] Write integration tests for category filtering
+- [x] T038 [P] [US3] Update CategorySelect to show Fixed/Variable labels
+- [x] T039 [P] [US3] Create category query functions in src/lib/supabase/queries/categories.ts
+- [x] T040 [US3] Add Fixed/Variable filter to TransactionList
+- [x] T041 [US3] Create spending breakdown component using Tremor charts
+- [x] T042 [US3] Write integration tests for category filtering
 
 ---
 
@@ -144,14 +144,17 @@
 
 *Tasks that affect multiple user stories*
 
-- [ ] T043 [P] Create CashFlowDashboard component integrating all sub-components
-- [ ] T044 [P] Update app/page.tsx to render CashFlowDashboard
-- [ ] T045 Add mobile-responsive layout with FAB for transaction entry
-- [ ] T046 Implement dark mode support
-- [ ] T047 Add loading states and skeleton components
-- [ ] T048 Handle edge cases (future-dated transactions styling, large number formatting)
-- [ ] T049 End-to-end testing of complete transaction flow
-- [ ] T050 Performance optimization (debounce, memoization)
+- [x] T043 [P] Create CashFlowDashboard component integrating all sub-components
+- [x] T044 [P] Update app/page.tsx to render CashFlowDashboard
+- [x] T045 Add mobile-responsive layout with FAB for transaction entry
+- [x] T046 Implement dark mode support
+- [x] T047 Add loading states and skeleton components
+- [x] T048 Handle edge cases (future-dated transactions styling, large number formatting)
+- [x] T034 [US4] Implement real-time subscription for balance updates
+- [x] T036 [US4] Implement historical balance viewing by date
+- [x] T037 [US4] Write unit tests for balance calculation logic
+- [x] T049 End-to-end testing of complete transaction flow
+- [x] T050 Performance optimization (debounce, memoization)
 
 ---
 
