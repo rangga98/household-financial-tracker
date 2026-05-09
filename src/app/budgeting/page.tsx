@@ -1,70 +1,82 @@
-import { getSupabaseServerClient } from '@/lib/supabase/server'
+'use client'
+
+import { useState, useEffect, useCallback } from 'react'
 import { BudgetLimitForm } from '@/components/features/budgeting/BudgetLimitForm'
 import { BudgetCard } from '@/components/features/budgeting/BudgetCard'
 import { updateCategoryLimit } from '@/app/actions/budgeting'
 import { getBudgetMetrics } from '@/lib/supabase/queries/budgeting'
-import type { Category } from '@/types'
+import { getCategories } from '@/lib/supabase/queries/categories'
+import { useCashFlowStore } from '@/hooks/useCashFlow'
+import type { Category, BudgetMetrics } from '@/types'
 
-export default async function BudgetingPage() {
-  const supabase = await getSupabaseServerClient()
+// TODO: Replace with actual household ID from Supabase
+const DEMO_HOUSEHOLD_ID = '963a25fc-553a-48b2-9439-d093984015f2'
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+export default function BudgetingPage() {
+  const [categories, setCategories] = useState<Category[]>([])
+  const [metrics, setMetrics] = useState<BudgetMetrics[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState('')
 
-  if (!user) {
-    return (
-      <div className="p-6 text-center">
-        <p className="text-gray-500">Please sign in to view your budget.</p>
-      </div>
-    )
+  const { setHouseholdId } = useCashFlowStore()
+
+  const loadData = useCallback(async () => {
+    try {
+      setIsLoading(true)
+      setHouseholdId(DEMO_HOUSEHOLD_ID)
+
+      const cats = await getCategories(DEMO_HOUSEHOLD_ID)
+      setCategories(cats)
+
+      const budgetMetrics = await getBudgetMetrics(DEMO_HOUSEHOLD_ID)
+      setMetrics(budgetMetrics)
+    } catch (err) {
+      console.error('Failed to load budget data:', err)
+      setError(err instanceof Error ? err.message : 'Failed to load data')
+    } finally {
+      setIsLoading(false)
+    }
+  }, [setHouseholdId])
+
+  useEffect(() => {
+    loadData()
+  }, [loadData])
+
+  const handleSaveLimit = async (categoryId: string, limit: number) => {
+    const result = await updateCategoryLimit(categoryId, limit)
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to save limit')
+    }
+    // Refresh metrics after save
+    const budgetMetrics = await getBudgetMetrics(DEMO_HOUSEHOLD_ID)
+    setMetrics(budgetMetrics)
   }
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('household_id')
-    .eq('id', user.id)
-    .single()
-
-  if (!profile) {
-    return (
-      <div className="p-6 text-center">
-        <p className="text-gray-500">Profile not found.</p>
-      </div>
-    )
-  }
-
-  const householdId = String(profile.household_id)
-
-  const { data: categoriesData } = await supabase
-    .from('categories')
-    .select('*')
-    .eq('household_id', householdId)
-    .eq('is_active', true)
-    .order('type')
-    .order('name')
-
-  const categories: Category[] = (categoriesData || []).map(
-    (c: Record<string, unknown>) => ({
-      id: String(c.id),
-      householdId: String(c.household_id),
-      name: String(c.name),
-      type: String(c.type) as 'fixed' | 'variable',
-      icon: c.icon ? String(c.icon) : undefined,
-      color: c.color ? String(c.color) : undefined,
-      isActive: Boolean(c.is_active),
-      monthlyLimit: c.monthly_limit ? Number(c.monthly_limit) : undefined,
-      createdAt: new Date(String(c.created_at)),
-      updatedAt: new Date(String(c.updated_at)),
-    })
-  )
-
-  const metrics = await getBudgetMetrics(householdId)
   const budgetCategories = metrics.filter((m) => m.monthlyLimit !== null)
 
-  async function handleSaveLimit(categoryId: string, limit: number) {
-    'use server'
-    await updateCategoryLimit(categoryId, limit)
+  if (isLoading) {
+    return (
+      <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-48" />
+          <div className="h-40 bg-gray-200 dark:bg-gray-700 rounded" />
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
+        <p className="text-red-500">{error}</p>
+        <button
+          onClick={loadData}
+          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+        >
+          Retry
+        </button>
+      </div>
+    )
   }
 
   return (
@@ -80,6 +92,7 @@ export default async function BudgetingPage() {
         <BudgetLimitForm
           categories={categories}
           onSave={handleSaveLimit}
+          isLoading={isLoading}
         />
       </section>
 
