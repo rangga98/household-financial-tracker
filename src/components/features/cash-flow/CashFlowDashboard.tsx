@@ -3,17 +3,21 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { Plus, Minus } from 'lucide-react'
 import { useCashFlowStore } from '@/hooks/useCashFlow'
+import { useEmergencyFundStore } from '@/hooks/useEmergencyFund'
 import { getSupabaseClient } from '@/lib/supabase/client'
 import { createTransaction } from '@/lib/supabase/actions/transactions'
+import { setupEmergencyFund, addToEmergencyFund, withdrawFromEmergencyFund } from '@/app/actions/emergency-fund'
 import { getTransactions } from '@/lib/supabase/queries/transactions'
 import { getCategories } from '@/lib/supabase/queries/categories'
 import { getProfiles } from '@/lib/supabase/queries/profiles'
 import { getBalance } from '@/lib/supabase/queries/balance'
+import { getEmergencyGoal, getTotalFunds } from '@/lib/supabase/queries/emergency-fund'
 import { TransactionForm } from './TransactionForm'
 import { TransactionList } from './TransactionList'
 import { BalanceDisplay } from './BalanceDisplay'
 import { UserSwitcher } from './UserSwitcher'
 import { SpendingBreakdown } from './SpendingBreakdown'
+import { EmergencyFundCard } from '@/components/features/emergency-fund'
 import { useToast } from './Toast'
 import type { TransactionInput } from '@/types'
 
@@ -43,6 +47,15 @@ export function CashFlowDashboard() {
     addTransaction,
   } = useCashFlowStore()
 
+  const {
+    profile: emergencyProfile,
+    emergencyGoal,
+    totalFunds,
+    availableBalance,
+    progress,
+    loadEmergencyFund,
+  } = useEmergencyFundStore()
+
   const loadData = useCallback(async () => {
     try {
       setIsLoading(true)
@@ -62,12 +75,19 @@ export function CashFlowDashboard() {
       // Load balance (with optional date filter)
       const bal = await getBalance(DEMO_HOUSEHOLD_ID, selectedDate)
       setBalance(bal)
+
+      // Load emergency fund data (if user is selected)
+      const allProfiles = await getProfiles(DEMO_HOUSEHOLD_ID)
+      if (allProfiles.length > 0) {
+        const userId = allProfiles[0].id
+        await loadEmergencyFund(userId, DEMO_HOUSEHOLD_ID)
+      }
     } catch (error) {
       console.error('Failed to load data:', error)
     } finally {
       setIsLoading(false)
     }
-  }, [setUsers, setCategories, setTransactions, setBalance, selectedDate])
+  }, [setUsers, setCategories, setTransactions, setBalance, setCurrentUser, loadEmergencyFund, selectedDate])
 
   useEffect(() => {
     loadData()
@@ -150,6 +170,50 @@ export function CashFlowDashboard() {
     setIsFormOpen(true)
   }
 
+  const handleEmergencyFundSetup = async (input: {
+    maritalStatus: 'single' | 'married'
+    dependents: number
+    monthlyLivingExpenseEstimate: number
+  }) => {
+    if (!currentUserId) {
+      showToast('Please select a user first', 'error')
+      return
+    }
+    try {
+      await setupEmergencyFund(currentUserId, DEMO_HOUSEHOLD_ID, input)
+      await loadEmergencyFund(currentUserId, DEMO_HOUSEHOLD_ID)
+      showToast('Emergency fund target set!', 'success')
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Failed to setup emergency fund', 'error')
+    }
+  }
+
+  const handleEmergencyFundAdd = async (amount: number) => {
+    if (!emergencyGoal?.id) return
+    try {
+      await addToEmergencyFund(emergencyGoal.id, amount)
+      if (currentUserId) {
+        await loadEmergencyFund(currentUserId, DEMO_HOUSEHOLD_ID)
+      }
+      showToast('Added to emergency fund!', 'success')
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Failed to add to emergency fund', 'error')
+    }
+  }
+
+  const handleEmergencyFundWithdraw = async (amount: number) => {
+    if (!emergencyGoal?.id) return
+    try {
+      await withdrawFromEmergencyFund(emergencyGoal.id, amount)
+      if (currentUserId) {
+        await loadEmergencyFund(currentUserId, DEMO_HOUSEHOLD_ID)
+      }
+      showToast('Withdrawn from emergency fund', 'success')
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Failed to withdraw', 'error')
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-md mx-auto p-4 space-y-6">
@@ -171,6 +235,19 @@ export function CashFlowDashboard() {
           isLoading={isLoading}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
+        />
+
+        {/* Emergency Fund Card */}
+        <EmergencyFundCard
+          profile={emergencyProfile}
+          emergencyGoal={emergencyGoal}
+          totalFunds={totalFunds}
+          availableBalance={availableBalance}
+          progress={progress}
+          isLoading={isLoading}
+          onSetup={handleEmergencyFundSetup}
+          onAdd={handleEmergencyFundAdd}
+          onWithdraw={handleEmergencyFundWithdraw}
         />
 
         {/* Quick Action Buttons */}

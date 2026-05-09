@@ -24,8 +24,8 @@ description: "Task list for Emergency Fund Management feature implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create TypeScript types for Emergency Fund in src/types/emergency-fund.ts
-- [ ] T002 [P] Create pure financial calculation utilities in src/lib/utils/financial.ts
+- [x] T001 Create TypeScript types for Emergency Fund in src/types/emergency-fund.ts
+- [x] T002 [P] Create pure financial calculation utilities in src/lib/utils/financial.ts
 
 ---
 
@@ -35,9 +35,9 @@ description: "Task list for Emergency Fund Management feature implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Execute database migrations from quickstart.md (user_profiles columns, financial_goals table, transactions column)
-- [ ] T004 [P] Create Supabase database queries in src/lib/supabase/emergency-fund.ts
-- [ ] T005 [P] Create Zustand store for emergency fund state in src/hooks/useEmergencyFund.ts
+- [x] T003 Execute database migrations from quickstart.md (user_profiles columns, financial_goals table, transactions column)
+- [x] T004 [P] Create Supabase database queries in src/lib/supabase/emergency-fund.ts
+- [x] T005 [P] Create Zustand store for emergency fund state in src/hooks/useEmergencyFund.ts
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -51,15 +51,15 @@ description: "Task list for Emergency Fund Management feature implementation"
 
 ### Tests for User Story 1 (TDD - write FIRST, ensure FAIL) ⚠️
 
-- [ ] T006 [P] [US1] Unit test for calculateEmergencyFundTarget in tests/unit/financial.test.ts
-- [ ] T007 [P] [US1] Unit test for getEffectiveTarget (with override) in tests/unit/financial.test.ts
+- [x] T006 [P] [US1] Unit test for calculateEmergencyFundTarget in tests/unit/financial.test.ts
+- [x] T007 [P] [US1] Unit test for getEffectiveTarget (with override) in tests/unit/financial.test.ts
 
 ### Implementation for User Story 1
 
-- [ ] T008 [P] [US1] Create EmergencyFundSetup component in src/components/features/emergency-fund/EmergencyFundSetup.tsx
-- [ ] T009 [US1] Implement Server Action for saving household profile in src/app/actions/emergency-fund.ts
-- [ ] T010 [US1] Add target calculation logic to useEmergencyFund store
-- [ ] T011 [US1] Add manual override functionality
+- [x] T008 [P] [US1] Create EmergencyFundSetup component in src/components/features/emergency-fund/EmergencyFundSetup.tsx
+- [x] T009 [US1] Implement Server Action for saving household profile in src/app/actions/emergency-fund.ts
+- [x] T010 [US1] Add target calculation logic to useEmergencyFund store
+- [x] T011 [US1] Add manual override functionality
 
 **Checkpoint**: User Story 1 should be fully functional and testable independently
 
@@ -73,15 +73,15 @@ description: "Task list for Emergency Fund Management feature implementation"
 
 ### Tests for User Story 2 (TDD - write FIRST, ensure FAIL) ⚠️
 
-- [ ] T012 [P] [US2] Unit test for calculateEmergencyFundProgress in tests/unit/financial.test.ts
-- [ ] T013 [P] [US2] Integration test for EmergencyFundProgress component in tests/integration/EmergencyFundProgress.test.tsx
+- [x] T012 [P] [US2] Unit test for calculateEmergencyFundProgress in tests/unit/financial.test.ts
+- [x] T013 [P] [US2] Integration test for EmergencyFundProgress component in tests/integration/EmergencyFundProgress.test.tsx
 
 ### Implementation for User Story 2
 
-- [ ] T014 [P] [US2] Create EmergencyFundProgress component with Tremor ProgressBar in src/components/features/emergency-fund/EmergencyFundProgress.tsx
-- [ ] T015 [P] [US2] Create EmergencyFundCard Bento-style container in src/components/features/emergency-fund/EmergencyFundCard.tsx
-- [ ] T016 [US2] Implement real-time progress updates via useEmergencyFund store
-- [ ] T017 [US2] Add "exceeded target" indicator for 100%+ progress
+- [x] T014 [P] [US2] Create EmergencyFundProgress component with Tremor ProgressBar in src/components/features/emergency-fund/EmergencyFundProgress.tsx
+- [x] T015 [P] [US2] Create EmergencyFundCard Bento-style container in src/components/features/emergency-fund/EmergencyFundCard.tsx
+- [x] T016 [US2] Implement real-time progress updates via useEmergencyFund store
+- [x] T017 [US2] Add "exceeded target" indicator for 100%+ progress
 
 **Checkpoint**: User Stories 1 AND 2 should both work independently
 
@@ -95,15 +95,15 @@ description: "Task list for Emergency Fund Management feature implementation"
 
 ### Tests for User Story 3 (TDD - write FIRST, ensure FAIL) ⚠️
 
-- [ ] T018 [P] [US3] Unit test for calculateAvailableBalance in tests/unit/financial.test.ts
-- [ ] T019 [P] [US3] Integration test for EmergencyFundForm withdrawal warning in tests/integration/EmergencyFundForm.test.tsx
+- [x] T018 [P] [US3] Unit test for calculateAvailableBalance in tests/unit/financial.test.ts
+- [x] T019 [P] [US3] Integration test for EmergencyFundForm withdrawal warning in tests/integration/EmergencyFundForm.test.tsx
 
 ### Implementation for User Story 3
 
-- [ ] T020 [P] [US3] Create EmergencyFundForm component for add/withdraw in src/components/features/emergency-fund/EmergencyFundForm.tsx
-- [ ] T021 [US3] Implement Virtual Bucket tracking via financial_goals table
-- [ ] T022 [US3] Add withdrawal warning dialog (Shadcn AlertDialog)
-- [ ] T023 [US3] Display locked vs available balance in EmergencyFundCard
+- [x] T020 [P] [US3] Create EmergencyFundForm component for add/withdraw in src/components/features/emergency-fund/EmergencyFundForm.tsx
+- [x] T021 [US3] Implement Virtual Bucket tracking via financial_goals table
+- [x] T022 [US3] Add withdrawal warning dialog (Shadcn AlertDialog)
+- [x] T023 [US3] Display locked vs available balance in EmergencyFundCard
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -113,11 +113,11 @@ description: "Task list for Emergency Fund Management feature implementation"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T024 [P] Add responsive styling (mobile-first, Bento grid for tablet/desktop)
-- [ ] T025 [P] Add dark mode support
-- [ ] T026 Add error handling and toast notifications
-- [ ] T027 Run quickstart.md validation checklist
-- [ ] T028 Update dashboard to include EmergencyFundCard
+- [x] T024 [P] Add responsive styling (mobile-first, Bento grid for tablet/desktop)
+- [x] T025 [P] Add dark mode support
+- [x] T026 Add error handling and toast notifications
+- [x] T027 Run quickstart.md validation checklist
+- [x] T028 Update dashboard to include EmergencyFundCard
 
 ---
 
