@@ -23,8 +23,21 @@ export interface Category {
   icon?: string;
   color?: string;
   isActive: boolean;
+  monthlyLimit?: number;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface BudgetMetrics {
+  categoryId: string;
+  categoryName: string;
+  monthlyLimit: number | null;
+  totalSpent: number;
+  remainingBudget: number;
+  percentageUsed: number;
+  dailySpendingPower: number;
+  isOverbudget: boolean;
+  progressColor: 'green' | 'yellow' | 'red' | 'gray';
 }
 
 export interface Transaction {
