@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
 import { BudgetLimitForm } from '@/components/features/budgeting/BudgetLimitForm'
 import { BudgetCard } from '@/components/features/budgeting/BudgetCard'
 import { updateCategoryLimit } from '@/app/actions/budgeting'
@@ -81,6 +83,15 @@ export default function BudgetingPage() {
 
   return (
     <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-8">
+      <div className="flex items-center gap-3">
+        <Link
+          href="/"
+          className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Dashboard
+        </Link>
+      </div>
       <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
         Simple Budgeting
       </h1>
