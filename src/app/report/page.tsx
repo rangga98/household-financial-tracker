@@ -1,16 +1,19 @@
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 import { getReportData } from '@/app/actions/report'
-import { getSupabaseServerClient } from '@/lib/supabase/server'
 import {
   ExpenseBreakdown,
   SavingsRate,
   MonthlyComparison,
 } from '@/components/features/report'
 import { MonthSelector } from '@/components/features/report/MonthSelector'
-import { Card } from '@tremor/react'
 
 interface ReportPageProps {
   searchParams: Promise<{ month?: string }>
 }
+
+// TODO: Replace with actual household ID from Supabase auth
+const DEMO_HOUSEHOLD_ID = '963a25fc-553a-48b2-9439-d093984015f2'
 
 function getCurrentYearMonth(): string {
   const now = new Date()
@@ -42,42 +45,7 @@ export default async function ReportPage({ searchParams }: ReportPageProps) {
   const selectedMonth = params.month ?? getCurrentYearMonth()
   const availableMonths = getLast12Months()
 
-  const supabase = await getSupabaseServerClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <Card className="p-6 text-center">
-          <p className="text-gray-500 dark:text-gray-400">
-            Please sign in to view your financial report.
-          </p>
-        </Card>
-      </div>
-    )
-  }
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('household_id')
-    .eq('id', user.id)
-    .single()
-
-  if (!profile?.household_id) {
-    return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <Card className="p-6 text-center">
-          <p className="text-gray-500 dark:text-gray-400">
-            No household associated with your account.
-          </p>
-        </Card>
-      </div>
-    )
-  }
-
-  const reportData = await getReportData(profile.household_id, selectedMonth)
+  const reportData = await getReportData(DEMO_HOUSEHOLD_ID, selectedMonth)
 
   const currentMonthLabel = formatMonthLabel(selectedMonth)
   const previousMonthLabel = reportData.comparison
@@ -86,6 +54,13 @@ export default async function ReportPage({ searchParams }: ReportPageProps) {
 
   return (
     <main className="container mx-auto px-4 py-6 max-w-6xl">
+      <Link
+        href="/"
+        className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors mb-4"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back to Dashboard
+      </Link>
       <MonthSelector
         selectedMonth={selectedMonth}
         availableMonths={availableMonths}

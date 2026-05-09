@@ -32,18 +32,18 @@ export function MonthlyComparison({
         <Text className="font-semibold">Monthly Comparison</Text>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg">
-          <Text className="text-gray-500 dark:text-gray-400 text-sm mb-1">{currentMonthLabel}</Text>
-          <p className="text-xl font-bold tabular-nums">{formatRp(currentMonthTotal)}</p>
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="bg-gray-50 dark:bg-gray-800/50 p-3 sm:p-4 rounded-lg min-w-0">
+          <Text className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mb-1 truncate">{currentMonthLabel}</Text>
+          <p className="text-sm sm:text-base lg:text-lg font-bold tabular-nums break-all">{formatRp(currentMonthTotal)}</p>
         </div>
-        <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg">
-          <Text className="text-gray-500 dark:text-gray-400 text-sm mb-1">{previousMonthLabel}</Text>
+        <div className="bg-gray-50 dark:bg-gray-800/50 p-3 sm:p-4 rounded-lg min-w-0">
+          <Text className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mb-1 truncate">{previousMonthLabel}</Text>
           {hasPreviousData ? (
-            <p className="text-xl font-bold tabular-nums">{formatRp(previousMonthTotal)}</p>
+            <p className="text-sm sm:text-base lg:text-lg font-bold tabular-nums break-all">{formatRp(previousMonthTotal)}</p>
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-gray-400">
-              <Text className="text-sm">No data</Text>
+              <Text className="text-xs sm:text-sm">No data</Text>
             </div>
           )}
         </div>

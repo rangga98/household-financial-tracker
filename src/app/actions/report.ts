@@ -96,7 +96,7 @@ export async function getReportData(
   try {
     const { data: currentTransactions, error: currentError } = await supabase
       .from('transactions')
-      .select('type, amount, category_id, categories(name, color)')
+      .select('type, amount, category_id, categories!inner(name, color)')
       .eq('household_id', householdId)
       .gte('transaction_date', startDate)
       .lt('transaction_date', endDate)
@@ -135,15 +135,25 @@ export async function getReportData(
     const currentTx = currentTransactions ?? []
     const previousTx = previousTransactions ?? []
 
+    function extractCategory(cats: unknown): { name: string; color: string | null } | null {
+      if (!cats) return null
+      if (Array.isArray(cats) && cats.length > 0) {
+        return { name: String(cats[0].name), color: cats[0].color ? String(cats[0].color) : null }
+      }
+      if (typeof cats === 'object' && cats !== null) {
+        const c = cats as Record<string, unknown>
+        return { name: String(c.name), color: c.color ? String(c.color) : null }
+      }
+      return null
+    }
+
     const expenseBreakdown = aggregateExpenses(
       currentTx
         .filter((t) => t.type === 'expense')
         .map((t) => ({
           category_id: t.category_id as string,
           amount: t.amount as number,
-          categories: t.categories && Array.isArray(t.categories) && t.categories.length > 0
-            ? { name: String(t.categories[0].name), color: t.categories[0].color ? String(t.categories[0].color) : null }
-            : null,
+          categories: extractCategory(t.categories),
         }))
     )
 

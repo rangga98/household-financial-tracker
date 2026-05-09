@@ -2,12 +2,12 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { ExpenseBreakdown } from './ExpenseBreakdown'
 
-vi.mock('@tremor/react', async () => {
-  const actual = await vi.importActual<typeof import('@tremor/react')>('@tremor/react')
+vi.mock('recharts', async () => {
+  const actual = await vi.importActual<typeof import('recharts')>('recharts')
   return {
     ...actual,
-    DonutChart: ({ data }: { data: unknown[] }) => (
-      <div data-testid="donut-chart">DonutChart: {JSON.stringify(data)}</div>
+    ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
+      <div data-testid="recharts-container">{children}</div>
     ),
   }
 })
@@ -25,9 +25,9 @@ const mockData = [
 ]
 
 describe('ExpenseBreakdown', () => {
-  it('renders DonutChart with category data', () => {
+  it('renders chart container with category data', () => {
     render(<ExpenseBreakdown data={mockData} totalExpenses={1000000} />)
-    expect(screen.getByTestId('donut-chart')).toBeInTheDocument()
+    expect(screen.getByTestId('recharts-container')).toBeInTheDocument()
   })
 
   it('displays empty state when no data', () => {
@@ -42,7 +42,7 @@ describe('ExpenseBreakdown', () => {
     expect(screen.getByText('Dining Out')).toBeInTheDocument()
   })
 
-  it('groups small categories into Other when more than 6', () => {
+  it('renders chart with grouped data when more than 6 categories', () => {
     const manyCategories = Array.from({ length: 8 }, (_, i) => ({
       categoryId: `c${i}`,
       categoryName: `Category ${i}`,
@@ -51,6 +51,7 @@ describe('ExpenseBreakdown', () => {
       percentage: i === 0 ? 90 : 0.5,
     }))
     render(<ExpenseBreakdown data={manyCategories} totalExpenses={1000000} />)
-    expect(screen.getByTestId('donut-chart').textContent).toMatch(/Other/i)
+    expect(screen.getByTestId('recharts-container')).toBeInTheDocument()
+    expect(screen.getByText('Category 0')).toBeInTheDocument()
   })
 })

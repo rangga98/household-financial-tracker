@@ -1,31 +1,37 @@
 'use client'
 
-import { DonutChart, Card, Title, Text } from '@tremor/react'
+import { Card, Title, Text } from '@tremor/react'
+import { PieChart as RePieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'
 import { formatRp } from '@/lib/utils/currency'
 import type { ExpenseBreakdownItem } from '@/types/report'
-import { PieChart } from 'lucide-react'
+import { PieChart as PieChartIcon } from 'lucide-react'
 
 interface ExpenseBreakdownProps {
   data: ExpenseBreakdownItem[]
   totalExpenses: number
 }
 
+const FALLBACK_COLORS = [
+  '#3b82f6', '#ef4444', '#22c55e', '#f59e0b', '#8b5cf6',
+  '#06b6d4', '#ec4899', '#f97316', '#14b8a6', '#6366f1',
+]
+
 function groupSmallCategories(items: ExpenseBreakdownItem[]): Array<{ name: string; value: number; color: string }> {
   if (items.length <= 6) {
-    return items.map((item) => ({
+    return items.map((item, i) => ({
       name: item.categoryName,
       value: item.totalAmount,
-      color: item.categoryColor ?? '#6b7280',
+      color: item.categoryColor ?? FALLBACK_COLORS[i % FALLBACK_COLORS.length],
     }))
   }
 
   const mainItems = items.filter((item) => item.percentage >= 1)
   const smallItems = items.filter((item) => item.percentage < 1)
 
-  const chartData = mainItems.map((item) => ({
+  const chartData = mainItems.map((item, i) => ({
     name: item.categoryName,
     value: item.totalAmount,
-    color: item.categoryColor ?? '#6b7280',
+    color: item.categoryColor ?? FALLBACK_COLORS[i % FALLBACK_COLORS.length],
   }))
 
   if (smallItems.length > 0) {
@@ -45,11 +51,11 @@ export function ExpenseBreakdown({ data, totalExpenses }: ExpenseBreakdownProps)
     return (
       <Card className="p-6">
         <div className="flex items-center gap-2 mb-4">
-          <PieChart className="w-5 h-5 text-blue-600" />
+          <PieChartIcon className="w-5 h-5 text-blue-600" />
           <Title>Expense Breakdown</Title>
         </div>
         <div className="flex flex-col items-center justify-center py-12 text-gray-500 dark:text-gray-400">
-          <PieChart className="w-12 h-12 mb-3 opacity-40" />
+          <PieChartIcon className="w-12 h-12 mb-3 opacity-40" />
           <Text>No expenses recorded this month</Text>
         </div>
       </Card>
@@ -57,12 +63,11 @@ export function ExpenseBreakdown({ data, totalExpenses }: ExpenseBreakdownProps)
   }
 
   const chartData = groupSmallCategories(data)
-  const colors = chartData.map((d) => d.color)
 
   return (
     <Card className="p-6">
       <div className="flex items-center gap-2 mb-4">
-        <PieChart className="w-5 h-5 text-blue-600" />
+        <PieChartIcon className="w-5 h-5 text-blue-600" />
         <Title>Expense Breakdown</Title>
       </div>
       <div
@@ -70,16 +75,33 @@ export function ExpenseBreakdown({ data, totalExpenses }: ExpenseBreakdownProps)
         aria-label="Expense breakdown by category"
         role="img"
       >
-        <DonutChart
-          data={chartData}
-          category="value"
-          index="name"
-          colors={colors}
-          valueFormatter={(value: number) => formatRp(value)}
-          showTooltip={true}
-          showLabel={true}
-          className="w-full h-64"
-        />
+        <ResponsiveContainer width="100%" height={200}>
+          <RePieChart>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
+              innerRadius={50}
+              outerRadius={80}
+              paddingAngle={3}
+              dataKey="value"
+              stroke="none"
+            >
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+            <Tooltip
+              formatter={(value) => formatRp(Number(value) || 0)}
+              contentStyle={{
+                backgroundColor: 'rgba(0,0,0,0.8)',
+                border: 'none',
+                borderRadius: '8px',
+                color: '#fff',
+              }}
+            />
+          </RePieChart>
+        </ResponsiveContainer>
       </div>
       <div className="mt-4 space-y-2">
         {data.map((item) => (
