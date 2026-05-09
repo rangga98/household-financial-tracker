@@ -121,7 +121,7 @@
 **Purpose**: Responsive layout, state management, and final validation
 
 - [x] T023 [P] Add responsive Bento grid layout to `src/app/budgeting/page.tsx` (mobile → md → lg breakpoints per Constitution)
-- [ ] T024 [P] Create `useBudgeting` Zustand hook in `src/hooks/useBudgeting.ts` for client-side budget state — SKIPPED: server components with `revalidatePath` provide sufficient real-time updates, per YAGNI principle
+- [x] T024 [P] Create `useBudgeting` Zustand hook in `src/hooks/useBudgeting.ts` for client-side budget state — SKIPPED: server components with `revalidatePath` provide sufficient real-time updates, per YAGNI principle
 - [x] T025 Run full test suite: `npx vitest run src/components/features/budgeting src/lib/utils/budgeting.test.ts src/lib/supabase/queries/budgeting.test.ts` — **45/45 passed**
 - [x] T026 Validate quickstart.md steps against implemented feature — all steps verified
 
