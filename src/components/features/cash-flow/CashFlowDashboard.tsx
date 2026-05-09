@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { Plus, Minus } from 'lucide-react'
+import { Plus, Minus, Shield } from 'lucide-react'
+import Link from 'next/link'
 import { useCashFlowStore } from '@/hooks/useCashFlow'
 import { useEmergencyFundStore } from '@/hooks/useEmergencyFund'
 import { getSupabaseClient } from '@/lib/supabase/client'
@@ -222,11 +223,20 @@ export function CashFlowDashboard() {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             Cash Flow
           </h1>
-          <UserSwitcher
-            users={users}
-            currentUserId={currentUserId || ''}
-            onSwitch={setCurrentUser}
-          />
+          <div className="flex items-center gap-2">
+            <Link
+              href="/budgeting"
+              className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
+            >
+              <Shield className="w-4 h-4" />
+              Budgeting
+            </Link>
+            <UserSwitcher
+              users={users}
+              currentUserId={currentUserId || ''}
+              onSwitch={setCurrentUser}
+            />
+          </div>
         </div>
 
         {/* Balance */}
