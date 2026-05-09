@@ -1,8 +1,10 @@
 'use client'
 
-import { DonutChart } from '@tremor/react'
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'
 import { formatCompactRp } from '@/lib/utils/currency'
 import type { Transaction } from '@/types'
+
+const COLORS = ['#f97316', '#3b82f6']
 
 interface SpendingBreakdownProps {
   transactions: Transaction[]
@@ -47,14 +49,24 @@ export function SpendingBreakdown({ transactions }: SpendingBreakdownProps) {
         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">
           Spending by Type
         </h3>
-        <DonutChart
-          data={summaryData}
-          category="value"
-          index="name"
-          valueFormatter={formatCompactRp}
-          colors={['orange', 'blue']}
-          className="h-40"
-        />
+        <ResponsiveContainer width="100%" height={160}>
+          <PieChart>
+            <Pie
+              data={summaryData}
+              cx="50%"
+              cy="50%"
+              innerRadius={40}
+              outerRadius={60}
+              paddingAngle={2}
+              dataKey="value"
+            >
+              {summaryData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip formatter={(value) => formatCompactRp(Number(value) || 0)} />
+          </PieChart>
+        </ResponsiveContainer>
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div className="text-center p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
             <p className="text-xs text-orange-600 dark:text-orange-400">Fixed</p>
