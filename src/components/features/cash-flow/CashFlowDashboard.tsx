@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { Plus, Minus, Shield } from 'lucide-react'
+import { Plus, Minus, Shield, BarChart3 } from 'lucide-react'
 import Link from 'next/link'
 import { useCashFlowStore } from '@/hooks/useCashFlow'
 import { useEmergencyFundStore } from '@/hooks/useEmergencyFund'
@@ -224,6 +224,13 @@ export function CashFlowDashboard() {
             Cash Flow
           </h1>
           <div className="flex items-center gap-2">
+            <Link
+              href="/report"
+              className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors"
+            >
+              <BarChart3 className="w-4 h-4" />
+              Report
+            </Link>
             <Link
               href="/budgeting"
               className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"

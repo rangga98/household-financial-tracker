@@ -1,5 +1,17 @@
 import type { Transaction, Balance } from '@/types'
 
+export function savingsRate(totalIncome: number, totalExpenses: number): number | null {
+  if (totalIncome === 0) return null
+  const rate = ((totalIncome - totalExpenses) / totalIncome) * 100
+  return Math.round(rate * 100) / 100
+}
+
+export function expensePercentChange(current: number, previous: number): number {
+  if (previous === 0) return 0
+  const change = ((current - previous) / previous) * 100
+  return Math.round(change * 100) / 100
+}
+
 export function calculateBalance(
   transactions: Transaction[],
   asOfDate?: Date

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { calculateBalance, calculateRunningBalance } from '@/lib/utils/calculations'
+import { calculateBalance, calculateRunningBalance, savingsRate, expensePercentChange } from '@/lib/utils/calculations'
 import type { Transaction } from '@/types'
 
 const mockTransaction = (overrides: Partial<Transaction> = {}): Transaction => ({
@@ -90,5 +90,53 @@ describe('balance calculations', () => {
       expect(result.get('2')).toBe(700000)
       expect(result.get('3')).toBe(500000)
     })
+  })
+})
+
+describe('savingsRate', () => {
+  it('calculates healthy savings rate (>20%)', () => {
+    expect(savingsRate(10000000, 7000000)).toBe(30)
+  })
+
+  it('calculates caution savings rate (10-20%)', () => {
+    expect(savingsRate(10000000, 8500000)).toBe(15)
+  })
+
+  it('calculates needs attention savings rate (<10%)', () => {
+    expect(savingsRate(10000000, 9500000)).toBe(5)
+  })
+
+  it('returns null when totalIncome is zero', () => {
+    expect(savingsRate(0, 500000)).toBeNull()
+  })
+
+  it('handles negative savings rate', () => {
+    expect(savingsRate(10000000, 12000000)).toBe(-20)
+  })
+
+  it('rounds to 2 decimal places', () => {
+    expect(savingsRate(10000000, 3333333)).toBe(66.67)
+  })
+})
+
+describe('expensePercentChange', () => {
+  it('calculates increase percentage', () => {
+    expect(expensePercentChange(5500000, 5000000)).toBe(10)
+  })
+
+  it('calculates decrease percentage', () => {
+    expect(expensePercentChange(4500000, 5000000)).toBe(-10)
+  })
+
+  it('returns 0 when previous is zero', () => {
+    expect(expensePercentChange(5000000, 0)).toBe(0)
+  })
+
+  it('returns 0 when current equals previous', () => {
+    expect(expensePercentChange(5000000, 5000000)).toBe(0)
+  })
+
+  it('rounds to 2 decimal places', () => {
+    expect(expensePercentChange(5333333, 5000000)).toBe(6.67)
   })
 })
