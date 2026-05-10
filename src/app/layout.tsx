@@ -27,9 +27,9 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased overflow-x-hidden`}
     >
-      <body className="min-h-full flex flex-col pb-16 md:pb-0">
+      <body className="min-h-full flex flex-col pb-16 overflow-x-hidden">
         <ToastProvider>
           {children}
         </ToastProvider>
