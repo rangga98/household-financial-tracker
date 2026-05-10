@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { CategoryList } from './CategoryList'
 import type { CustomCategory } from '@/lib/supabase/categories'
@@ -10,12 +11,10 @@ interface CategoryListWrapperProps {
 
 export function CategoryListWrapper({ initialCategories }: CategoryListWrapperProps) {
   const [categories, setCategories] = useState<CustomCategory[]>(initialCategories)
+  const router = useRouter()
 
   function handleUpdate() {
-    // In a real app, this would refetch from the server
-    // For now, we rely on the server action revalidating the page
-    // which triggers a fresh render on next navigation
-    window.location.reload()
+    router.refresh()
   }
 
   return <CategoryList categories={categories} onUpdate={handleUpdate} />

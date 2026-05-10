@@ -31,6 +31,7 @@ export function CategoryList({ categories, onUpdate }: CategoryListProps) {
         onFilterTypeChange={setFilterType}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
+        onRefresh={onUpdate}
       />
 
       {filteredCategories.length === 0 ? (
@@ -40,7 +41,7 @@ export function CategoryList({ categories, onUpdate }: CategoryListProps) {
             : 'No categories match your filters.'}
         </p>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1 pb-2">
           {filteredCategories.map((category) => (
             <CategoryCard
               key={category.id}

@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { CategoryForm } from './CategoryForm'
 import { createCategoryAction } from '@/app/categories/actions/create'
 import { useToast } from '@/components/features/cash-flow/Toast'
@@ -11,6 +12,7 @@ interface CategoryFormWrapperProps {
 
 export function CategoryFormWrapper({ householdId }: CategoryFormWrapperProps) {
   const { showToast } = useToast()
+  const router = useRouter()
 
   async function handleSubmit(data: CategoryFormData) {
     const formData = new FormData()
@@ -23,6 +25,7 @@ export function CategoryFormWrapper({ householdId }: CategoryFormWrapperProps) {
 
     if (result.success) {
       showToast(`Category "${result.category?.name}" created`, 'success')
+      router.refresh()
     } else {
       showToast(result.error || 'Failed to create category', 'error')
       throw new Error(result.error || 'Failed to create category')

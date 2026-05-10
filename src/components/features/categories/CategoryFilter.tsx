@@ -1,6 +1,6 @@
 'use client'
 
-import { Search, SlidersHorizontal } from 'lucide-react'
+import { Search, SlidersHorizontal, RefreshCw } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
 interface CategoryFilterProps {
@@ -8,6 +8,7 @@ interface CategoryFilterProps {
   onFilterTypeChange: (type: 'all' | 'fixed' | 'variable') => void
   searchQuery: string
   onSearchChange: (query: string) => void
+  onRefresh?: () => void
 }
 
 export function CategoryFilter({
@@ -15,6 +16,7 @@ export function CategoryFilter({
   onFilterTypeChange,
   searchQuery,
   onSearchChange,
+  onRefresh,
 }: CategoryFilterProps) {
   return (
     <div className="space-y-3">
@@ -35,7 +37,7 @@ export function CategoryFilter({
 
       <div className="flex items-center gap-2">
         <SlidersHorizontal className="w-4 h-4 text-gray-400 shrink-0" />
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="flex gap-2 overflow-x-auto pb-1 flex-1">
           {(['all', 'fixed', 'variable'] as const).map((type) => (
             <button
               key={type}
@@ -52,6 +54,20 @@ export function CategoryFilter({
             </button>
           ))}
         </div>
+        {onRefresh && (
+          <button
+            type="button"
+            onClick={onRefresh}
+            aria-label="Refresh categories"
+            className={cn(
+              'p-2 rounded-lg transition-colors shrink-0 min-h-[36px] min-w-[36px]',
+              'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
+              'hover:bg-gray-200 dark:hover:bg-gray-700 active:scale-95'
+            )}
+          >
+            <RefreshCw className="w-4 h-4" />
+          </button>
+        )}
       </div>
     </div>
   )
