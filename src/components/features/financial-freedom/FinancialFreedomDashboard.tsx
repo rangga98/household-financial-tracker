@@ -12,11 +12,13 @@ import { FIProjectionChart } from './FIProjectionChart'
 interface FinancialFreedomDashboardProps {
   profile: FIProfile
   suggestedAnnualExpenses?: number | null
+  onProfileUpdate?: (profile: FIProfile) => void
 }
 
 export function FinancialFreedomDashboard({
   profile,
   suggestedAnnualExpenses,
+  onProfileUpdate,
 }: FinancialFreedomDashboardProps) {
   const [showForm, setShowForm] = useState(false)
 
@@ -94,7 +96,10 @@ export function FinancialFreedomDashboard({
             <FIInputForm
               profile={profile}
               suggestedAnnualExpenses={suggestedAnnualExpenses}
-              onUpdate={() => setShowForm(false)}
+              onUpdate={(updatedProfile: FIProfile) => {
+                onProfileUpdate?.(updatedProfile)
+                setShowForm(false)
+              }}
             />
           </div>
         )}
@@ -143,7 +148,10 @@ export function FinancialFreedomDashboard({
             <FIInputForm
               profile={profile}
               suggestedAnnualExpenses={suggestedAnnualExpenses}
-              onUpdate={() => setShowForm(false)}
+              onUpdate={(updatedProfile: FIProfile) => {
+                onProfileUpdate?.(updatedProfile)
+                setShowForm(false)
+              }}
             />
           </div>
         )}
