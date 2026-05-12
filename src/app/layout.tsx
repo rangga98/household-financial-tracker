@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/features/cash-flow/Toast";
-import { BottomNav } from "@/components/features/report/BottomNav";
+import { SideNav } from "@/components/features/report/SideNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,11 +29,13 @@ export default function RootLayout({
       lang="id"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased overflow-x-hidden`}
     >
-      <body className="min-h-full flex flex-col pb-16 overflow-x-hidden">
+      <body className="min-h-full overflow-x-hidden">
+        <SideNav />
         <ToastProvider>
-          {children}
+          <main className="min-h-screen md:pl-16 transition-all duration-200">
+            {children}
+          </main>
         </ToastProvider>
-        <BottomNav />
       </body>
     </html>
   );
