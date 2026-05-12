@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { Button, TextInput, Text } from '@tremor/react'
 import { updateFIProfile } from '@/app/actions/financial-freedom'
 import type { FIProfile } from '@/types/financial-freedom'
 import { Sparkles, TrendingUp, Shield, Zap } from 'lucide-react'
@@ -66,12 +65,13 @@ export function FIInputForm({
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Annual Expenses (Rp)
         </label>
-        <TextInput
+        <input
           type="number"
           value={String(formData.fiAnnualExpenses)}
           onChange={(e) => setFormData({ ...formData, fiAnnualExpenses: e.target.value })}
           placeholder={suggestedAnnualExpenses?.toString() || 'e.g., 40000000'}
           disabled={isPending}
+          className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors disabled:opacity-50"
         />
         {suggestedAnnualExpenses && !profile.fiAnnualExpenses && (
           <button
@@ -89,7 +89,7 @@ export function FIInputForm({
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Savings Rate (%)
         </label>
-        <TextInput
+        <input
           type="number"
           value={String(formData.fiSavingsRate)}
           onChange={(e) => setFormData({ ...formData, fiSavingsRate: e.target.value })}
@@ -97,6 +97,7 @@ export function FIInputForm({
           min="0"
           max="100"
           disabled={isPending}
+          className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors disabled:opacity-50"
         />
       </div>
 
@@ -104,13 +105,14 @@ export function FIInputForm({
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Current Age
         </label>
-        <TextInput
+        <input
           type="number"
           value={String(formData.fiCurrentAge)}
           onChange={(e) => setFormData({ ...formData, fiCurrentAge: e.target.value })}
           placeholder="e.g., 30"
           min="0"
           disabled={isPending}
+          className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors disabled:opacity-50"
         />
       </div>
 
@@ -118,13 +120,14 @@ export function FIInputForm({
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Current Net Worth (Rp)
         </label>
-        <TextInput
+        <input
           type="number"
           value={String(formData.fiCurrentNetWorth)}
           onChange={(e) => setFormData({ ...formData, fiCurrentNetWorth: e.target.value })}
           placeholder="e.g., 100000000"
           min="0"
           disabled={isPending}
+          className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors disabled:opacity-50"
         />
       </div>
 
@@ -132,7 +135,7 @@ export function FIInputForm({
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Expected Return (%)
         </label>
-        <TextInput
+        <input
           type="number"
           value={String(formData.fiExpectedReturn)}
           onChange={(e) => setFormData({ ...formData, fiExpectedReturn: e.target.value })}
@@ -141,6 +144,7 @@ export function FIInputForm({
           max="100"
           step="0.1"
           disabled={isPending}
+          className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors disabled:opacity-50"
         />
         {/* Return Presets */}
         <div className="mt-2 grid grid-cols-3 gap-2">
@@ -170,23 +174,22 @@ export function FIInputForm({
             )
           })}
         </div>
-        <Text className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+        <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
           Higher returns = faster FI, but more risk
-        </Text>
+        </p>
       </div>
 
       {error && (
         <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
       )}
 
-      <Button
+      <button
         type="submit"
-        color="blue"
-        className="w-full"
         disabled={isPending}
+        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isPending ? 'Saving...' : 'Save Profile'}
-      </Button>
+      </button>
     </form>
   )
 }

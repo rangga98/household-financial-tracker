@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Button, TextInput } from '@tremor/react'
 import { Plus, Minus } from 'lucide-react'
 
 interface EmergencyFundFormProps {
@@ -37,13 +36,23 @@ export function EmergencyFundForm({ goalId, onAdd, onWithdraw, isLoading }: Emer
 
   return (
     <div className="space-y-3">
-      <TextInput
-        type="number"
-        placeholder="Amount"
-        prefix="Rp "
-        value={amount}
-        onValueChange={setAmount}
-      />
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Amount (Rp)
+        </label>
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 dark:text-gray-400">
+            Rp
+          </span>
+          <input
+            type="number"
+            placeholder="0"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 pl-9 pr-3 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+          />
+        </div>
+      </div>
 
       <div className="flex gap-2">
         <button
@@ -72,13 +81,13 @@ export function EmergencyFundForm({ goalId, onAdd, onWithdraw, isLoading }: Emer
         </button>
       </div>
 
-      <Button
-        className="w-full"
+      <button
+        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={handleSubmit}
         disabled={isLoading || !amount || parseFloat(amount) <= 0 || !goalId}
       >
         {isLoading ? 'Processing...' : action === 'add' ? 'Add to Emergency Fund' : 'Withdraw'}
-      </Button>
+      </button>
 
       {showWarning && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
