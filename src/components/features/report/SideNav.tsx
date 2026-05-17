@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, BarChart3, Wallet, Shield, Tag, Target, PiggyBank, TrendingUp, ChevronLeft, ChevronRight, Menu, X } from 'lucide-react'
+import { Home, BarChart3, Wallet, Shield, ShieldCheck, Tag, Target, PiggyBank, TrendingUp, ChevronLeft, ChevronRight, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
 const navItems = [
@@ -14,6 +14,7 @@ const navItems = [
   { href: '/financial-freedom', label: 'FI', icon: Target },
   { href: '/sinking-funds', label: 'Savings', icon: PiggyBank },
   { href: '/net-worth', label: 'Net Worth', icon: TrendingUp },
+  { href: '/risk-management', label: 'Protection', icon: ShieldCheck },
   { href: '/categories', label: 'Categories', icon: Tag },
 ]
 
