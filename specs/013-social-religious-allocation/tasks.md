@@ -19,9 +19,9 @@
 
 **Purpose**: Database migration and project initialization
 
-- [ ] T001 Create migration file `src/lib/supabase/migrations/013-social-religious-allocation.sql` with profile columns and goal_type extension per data-model.md
-- [ ] T002 [P] Add TypeScript types for giving module in `src/types/giving.ts`
-- [ ] T003 [P] Create database queries in `src/lib/supabase/queries/giving.ts`
+- [X] T001 Create migration file `src/lib/supabase/migrations/013-social-religious-allocation.sql` with profile columns and goal_type extension per data-model.md
+- [X] T002 [P] Add TypeScript types for giving module in `src/types/giving.ts`
+- [X] T003 [P] Create database queries in `src/lib/supabase/queries/giving.ts`
 
 ---
 
@@ -31,10 +31,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 [P] Implement Zakat Maal calculation utility in `src/lib/utils/calculations/zakat-maal.ts`
-- [ ] T005 [P] Implement Zakat Fitrah calculation utility in `src/lib/utils/calculations/zakat-fitrah.ts`
-- [ ] T006 Create useGiving hook in `src/hooks/useGiving.ts`
-- [ ] T007 [P] Create Zakat calculator server actions in `src/app/actions/giving.ts`
+- [X] T004 [P] Implement Zakat Maal calculation utility in `src/lib/utils/zakat-maal.ts`
+- [X] T005 [P] Implement Zakat Fitrah calculation utility in `src/lib/utils/zakat-fitrah.ts`
+- [X] T006 Create useGiving hook in `src/hooks/useGiving.ts`
+- [X] T007 [P] Create Zakat calculator server actions in `src/app/actions/giving.ts`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -50,20 +50,20 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T008 [P] [US1] Unit test for Zakat Maal above nisab in `src/lib/utils/calculations/zakat-maal.test.ts`
-- [ ] T009 [P] [US1] Unit test for Zakat Maal below nisab (returns 0) in `src/lib/utils/calculations/zakat-maal.test.ts`
-- [ ] T010 [P] [US1] Unit test for Zakat Maal exactly at nisab in `src/lib/utils/calculations/zakat-maal.test.ts`
-- [ ] T011 [P] [US1] Unit test for Zakat Fitrah calculation in `src/lib/utils/calculations/zakat-fitrah.test.ts`
-- [ ] T012 [P] [US1] Unit test for Zakat Fitrah with custom sha weight in `src/lib/utils/calculations/zakat-fitrah.test.ts`
+- [X] T008 [P] [US1] Unit test for Zakat Maal above nisab in `src/lib/utils/zakat-maal.test.ts`
+- [X] T009 [P] [US1] Unit test for Zakat Maal below nisab (returns 0) in `src/lib/utils/zakat-maal.test.ts`
+- [X] T010 [P] [US1] Unit test for Zakat Maal exactly at nisab in `src/lib/utils/zakat-maal.test.ts`
+- [X] T011 [P] [US1] Unit test for Zakat Fitrah calculation in `src/lib/utils/zakat-fitrah.test.ts`
+- [X] T012 [P] [US1] Unit test for Zakat Fitrah with custom sha weight in `src/lib/utils/zakat-fitrah.test.ts`
 
 ### Implementation for User Story 1
 
-- [ ] T013 [P] [US1] Create ZakatCalculator component in `src/components/features/giving/ZakatCalculator.tsx`
-- [ ] T014 [P] [US1] Create ZakatMaalForm component in `src/components/features/giving/ZakatMaalForm.tsx`
-- [ ] T015 [P] [US1] Create ZakatFitrahForm component in `src/components/features/giving/ZakatFitrahForm.tsx`
-- [ ] T016 [US1] Create calculator page route in `src/app/(dashboard)/giving/calculator/page.tsx`
-- [ ] T017 [US1] Add validation for required fields (FR-024)
-- [ ] T018 [US1] Add "No Zakat due" display when below nisab (FR-023)
+- [X] T013 [P] [US1] Create ZakatCalculator component in `src/components/features/giving/ZakatCalculator.tsx`
+- [X] T014 [P] [US1] Create ZakatMaalForm component in `src/components/features/giving/ZakatMaalForm.tsx`
+- [X] T015 [P] [US1] Create ZakatFitrahForm component in `src/components/features/giving/ZakatFitrahForm.tsx`
+- [X] T016 [US1] Create calculator page route in `src/app/(dashboard)/giving/calculator/page.tsx`
+- [X] T017 [US1] Add validation for required fields (FR-024)
+- [X] T018 [US1] Add "No Zakat due" display when below nisab (FR-023)
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -77,9 +77,9 @@
 
 ### Implementation for User Story 2
 
-- [ ] T019 [P] [US2] Create GivingSettingsForm component in `src/components/features/giving/GivingSettingsForm.tsx`
-- [ ] T020 [P] [US2] Create ProfileSettings page route in `src/app/(dashboard)/giving/settings/page.tsx`
-- [ ] T021 [US2] Implement updateGivingSettings server action in `src/app/actions/giving.ts`
+- [X] T019 [P] [US2] Create GivingSettingsForm component in `src/components/features/giving/GivingSettingsForm.tsx`
+- [X] T020 [P] [US2] Create ProfileSettings page route in `src/app/(dashboard)/giving/settings/page.tsx`
+- [X] T021 [US2] Implement updateGivingSettings server action in `src/app/actions/giving.ts`
 - [ ] T022 [US2] Add validation for allocation settings (FR-010, FR-025)
 - [ ] T023 [US2] Create auto-allocation trigger logic in income transaction flow
 - [ ] T024 [US2] Add empty state when no settings configured (FR-040)
@@ -147,7 +147,7 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T041 [P] Add navigation item for Giving module in SideNav
+- [X] T041 [P] Add navigation item for Giving module in SideNav
 - [ ] T042 [P] Ensure mobile-first responsive layout across all components
 - [ ] T043 Add dark mode support for all Giving components
 - [ ] T044 Run quickstart.md validation
