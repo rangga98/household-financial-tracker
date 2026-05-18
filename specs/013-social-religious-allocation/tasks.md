@@ -80,9 +80,9 @@
 - [X] T019 [P] [US2] Create GivingSettingsForm component in `src/components/features/giving/GivingSettingsForm.tsx`
 - [X] T020 [P] [US2] Create ProfileSettings page route in `src/app/(dashboard)/giving/settings/page.tsx`
 - [X] T021 [US2] Implement updateGivingSettings server action in `src/app/actions/giving.ts`
-- [ ] T022 [US2] Add validation for allocation settings (FR-010, FR-025)
-- [ ] T023 [US2] Create auto-allocation trigger logic in income transaction flow
-- [ ] T024 [US2] Add empty state when no settings configured (FR-040)
+- [X] T022 [US2] Add validation for allocation settings (FR-010, FR-025)
+- [X] T023 [US2] Create auto-allocation trigger logic in income transaction flow
+- [X] T024 [US2] Add empty state when no settings configured (FR-040)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -96,11 +96,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T025 [P] [US3] Create CompassionFundCard component in `src/components/features/giving/CompassionFundCard.tsx`
-- [ ] T026 [P] [US3] Create CompassionFundHistory component in `src/components/features/giving/CompassionFundHistory.tsx`
-- [ ] T027 [P] [US3] Create DisbursementForm component in `src/components/features/giving/DisbursementForm.tsx`
-- [ ] T028 [US3] Implement recordDisbursement server action in `src/app/actions/giving.ts`
-- [ ] T029 [US3] Add insufficient balance warning (FR-056) with confirmation dialog
+- [X] T025 [P] [US3] Create CompassionFundCard component in `src/components/features/giving/CompassionFundCard.tsx`
+- [X] T026 [P] [US3] Create CompassionFundHistory component in `src/components/features/giving/CompassionFundHistory.tsx`
+- [X] T027 [P] [US3] Create DisbursementForm component in `src/components/features/giving/DisbursementForm.tsx`
+- [X] T028 [US3] Implement recordDisbursement server action in `src/app/actions/giving.ts`
+- [X] T029 [US3] Add insufficient balance warning (FR-056) with confirmation dialog
 
 **Checkpoint**: User Stories 1, 2, AND 3 should now work independently
 
@@ -114,13 +114,13 @@
 
 ### Implementation for User Story 4
 
-- [ ] T030 [P] [US4] Create GivingSummaryCard component in `src/components/features/giving/GivingSummaryCard.tsx`
-- [ ] T031 [P] [US4] Create GivingDonutChart component using Tremor in `src/components/features/giving/GivingDonutChart.tsx`
-- [ ] T032 [P] [US4] Create GivingBarChart component using Tremor in `src/components/features/giving/GivingBarChart.tsx`
-- [ ] T033 [US4] Create GivingDashboard component in `src/components/features/giving/GivingDashboard.tsx`
-- [ ] T034 [US4] Create main Giving page route in `src/app/(dashboard)/giving/page.tsx`
-- [ ] T035 [US4] Add date filter for period selection (FR-071)
-- [ ] T036 [US4] Add empty state when no transactions (FR-072)
+- [X] T030 [P] [US4] Create GivingSummaryCard component in `src/components/features/giving/GivingSummaryCard.tsx`
+- [X] T031 [P] [US4] Create GivingDonutChart component using Tremor in `src/components/features/giving/GivingDonutChart.tsx`
+- [X] T032 [P] [US4] Create GivingBarChart component using Tremor in `src/components/features/giving/GivingBarChart.tsx`
+- [X] T033 [US4] Create GivingDashboard component in `src/components/features/giving/GivingDashboard.tsx`
+- [X] T034 [US4] Create main Giving page route in `src/app/(dashboard)/giving/page.tsx`
+- [X] T035 [US4] Add date filter for period selection (FR-071)
+- [X] T036 [US4] Add empty state when no transactions (FR-072)
 
 **Checkpoint**: User Stories 1-4 should now work independently
 
@@ -134,10 +134,10 @@
 
 ### Implementation for User Story 5
 
-- [ ] T037 [P] [US5] Add edit functionality to GivingSettingsForm in `src/components/features/giving/GivingSettingsForm.tsx`
-- [ ] T038 [P] [US5] Add delete/clear functionality for allocation settings in `src/components/features/giving/GivingSettingsForm.tsx`
-- [ ] T039 [US5] Verify historical transactions preserved after settings change (FR-087, FR-088)
-- [ ] T040 [US5] Add validation error for invalid percentages (FR-089)
+- [X] T037 [P] [US5] Add edit functionality to GivingSettingsForm in `src/components/features/giving/GivingSettingsForm.tsx`
+- [X] T038 [P] [US5] Add delete/clear functionality for allocation settings in `src/components/features/giving/GivingSettingsForm.tsx`
+- [X] T039 [US5] Verify historical transactions preserved after settings change (FR-087, FR-088)
+- [X] T040 [US5] Add validation error for invalid percentages (FR-089)
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -148,10 +148,10 @@
 **Purpose**: Improvements that affect multiple user stories
 
 - [X] T041 [P] Add navigation item for Giving module in SideNav
-- [ ] T042 [P] Ensure mobile-first responsive layout across all components
-- [ ] T043 Add dark mode support for all Giving components
-- [ ] T044 Run quickstart.md validation
-- [ ] T045 Add error boundaries and toast notifications
+- [X] T042 [P] Ensure mobile-first responsive layout across all components
+- [X] T043 Add dark mode support for all Giving components
+- [X] T044 Run quickstart.md validation
+- [X] T045 Add error boundaries and toast notifications
 
 ---
 

@@ -2,6 +2,9 @@ import { ZakatCalculator } from '@/components/features/giving/ZakatCalculator'
 import { Card, Title, Text, Badge } from '@tremor/react'
 import { ChevronRight, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+import { GivingEmptyState } from '@/components/features/giving/GivingEmptyState'
+import { GivingDashboard } from '@/components/features/giving/GivingDashboard'
+import { CompassionFundCard } from '@/components/features/giving/CompassionFundCard'
 
 export default function GivingPage() {
   return (
@@ -50,15 +53,14 @@ export default function GivingPage() {
           </Card>
         </Link>
 
-        <Card className="h-full border border-emerald-200/60 dark:border-emerald-900/60 bg-emerald-50/60 dark:bg-emerald-950/20">
-          <Title>Compassion Fund</Title>
-          <Text className="mt-2 text-emerald-800 dark:text-emerald-300">Balance & recent activity</Text>
-          <div className="mt-4 text-2xl font-bold text-emerald-700 dark:text-emerald-400">Rp 0</div>
-          <Badge color="gray" className="mt-2 w-max ring-1 ring-black/5 dark:ring-white/10">Coming soon</Badge>
-        </Card>
+        <CompassionFundCard />
       </div>
 
-      {/* Inline calculator removed to avoid duplication; use the quick action card above */}
+      {/* Empty state prompt to guide setup when allocations are not configured */}
+      <GivingEmptyState />
+
+      {/* Summary (placeholder without householdId binding) */}
+      <GivingDashboard />
     </div>
   )
 }
