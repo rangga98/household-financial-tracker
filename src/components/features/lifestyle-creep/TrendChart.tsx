@@ -50,9 +50,9 @@ export function TrendChart({ data }: TrendChartProps) {
               width={70}
             />
             <Tooltip
-              formatter={(value: number, name: string) => [
-                formatRp(value), 
-                name.charAt(0).toUpperCase() + name.slice(1)
+              formatter={(value: any, name: any) => [
+                formatRp(Number(value) || 0), 
+                String(name).charAt(0).toUpperCase() + String(name).slice(1)
               ]}
               labelStyle={{ color: '#9ca3af', fontWeight: 600, marginBottom: '8px' }}
               contentStyle={{
