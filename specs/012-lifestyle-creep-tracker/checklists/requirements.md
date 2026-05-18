@@ -33,6 +33,10 @@
 
 ## Sign-off
 
-**Status**: Ready for Planning
+**Status**: Ready for Planning (Revised)
 
-**Notes**: Specification is complete and ready to proceed to the planning phase.
+**Notes**: Specification revised per critical feedback:
+- Key Entities section rewritten with explicit DERIVED STATE warning (NO DATABASE TABLES)
+- FR-001/FR-002 updated to use average-based calculation for outlier resilience
+- UI components explicitly specified: Tremor LineChart, Shadcn/ui Alert + Select
+- TDD requirements added (FR-011, FR-012, SC-006) for math utility with 100% test coverage

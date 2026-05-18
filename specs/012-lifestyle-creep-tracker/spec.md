@@ -17,8 +17,9 @@ As a user, I want to see a comparison of my income growth versus my expense grow
 
 **Acceptance Scenarios**:
 
-1. **Given** a user has at least two months of income and expense data, **When** they navigate to the Lifestyle Creep Tracker page and select a 6-month comparison period, **Then** they see the percentage increase/decrease for both income and expenses calculated from the first month to the last month of the period.
-2. **Given** a user has insufficient data (less than 2 months), **When** they view the tracker, **Then** they see a message indicating more data is needed to perform the analysis.
+1. **Given** a user has at least 6 months of income and expense data, **When** they navigate to the Lifestyle Creep Tracker page and select a 6-month comparison period, **Then** they see the percentage increase/decrease calculated by comparing the average of months 1-3 against the average of months 4-6 for both income and expenses.
+2. **Given** a user has 3-5 months of data, **When** they select a 3-month period, **Then** the system compares month 1 against month 3 (single month comparison).
+3. **Given** a user has insufficient data (less than 3 months), **When** they view the tracker, **Then** they see a message indicating more data is needed to perform the analysis.
 
 ---
 
@@ -81,22 +82,26 @@ As a user, I want to select different time periods (3 months, 6 months, 12 month
 
 ### Functional Requirements
 
-- **FR-001**: The system MUST calculate the percentage change in total income between the start and end of the selected time period using the formula: ((End Income - Start Income) / Start Income) × 100.
-- **FR-002**: The system MUST calculate the percentage change in total expenses between the start and end of the selected time period using the formula: ((End Expenses - Start Expenses) / Start Expenses) × 100.
+- **FR-001**: The system MUST calculate the percentage change in income by comparing the average of the first 3 months against the average of the last 3 months within the selected period using the formula: ((Last 3 Months Average - First 3 Months Average) / First 3 Months Average) × 100. If the period is shorter than 6 months, use the first and last single months.
+- **FR-002**: The system MUST calculate the percentage change in expenses using the same averaging methodology as FR-001 for direct comparability.
 - **FR-003**: The system MUST display both income and expense percentage changes in a clear, side-by-side comparison format.
-- **FR-004**: The system MUST issue a visual warning when the expense growth percentage exceeds the income growth percentage by any margin.
+- **FR-004**: The system MUST issue a visual warning when the expense growth percentage exceeds the income growth percentage by any margin. The warning MUST be rendered using the Shadcn/ui `Alert` component with `variant="destructive"`.
 - **FR-005**: The system MUST support predefined time period selections: 3 months, 6 months, and 12 months.
-- **FR-006**: The system MUST support custom date range selection with user-defined start and end dates.
-- **FR-007**: The system MUST display a line chart showing both income and expense trends over the selected time period.
+- **FR-006**: The system MUST support custom date range selection with user-defined start and end dates using Shadcn/ui `Select` component for the dropdown.
+- **FR-007**: The system MUST display a line chart showing both income and expense trends over the selected time period using the Tremor `LineChart` component with distinct colors for each data series.
 - **FR-008**: The system MUST handle edge cases gracefully by displaying appropriate messages when data is insufficient or missing.
 - **FR-009**: The system MUST calculate growth rates using monthly aggregated totals (sum of all income/expense transactions per month).
 - **FR-010**: The system MUST exclude transfer transactions between user's own accounts from both income and expense calculations to avoid double-counting.
+- **FR-011**: The system MUST extract all percentage calculation logic into a pure utility function `calculateGrowthPercentage()` with comprehensive unit tests covering division-by-zero scenarios, negative values, and zero baseline cases.
+- **FR-012**: All mathematical utility functions MUST achieve 100% test coverage with Jest/Vitest before implementation is considered complete.
 
-### Key Entities *(include if feature involves data)*
+### Key Entities *(DERIVED STATE - NO DATABASE TABLES)*
 
-- **Lifestyle Creep Analysis**: Represents a snapshot comparison of income vs expense growth for a specific time period. Contains: period start date, period end date, income growth percentage, expense growth percentage, warning status, and trend data points.
-- **Trend Data Point**: Monthly aggregated financial data for charting purposes. Contains: month/year, total income for the month, total expenses for the month.
-- **Time Period Selection**: User's chosen analysis window. Contains: period type (3mo/6mo/12mo/custom), custom start date (if applicable), custom end date (if applicable).
+**⚠️ CRITICAL: The following entities are PURE DERIVED STATE calculated in real-time from the existing `transactions` table. DO NOT create database tables for these. They exist only as TypeScript interfaces and runtime calculations in the UI layer.**
+
+- **Lifestyle Creep Analysis**: DERIVED STATE object calculated on-demand. Contains: period start date, period end date, income growth percentage, expense growth percentage, warning status, and trend data points. All values computed from aggregating transactions table data.
+- **Trend Data Point**: DERIVED STATE representing monthly aggregated financial data for charting. Contains: month/year, total income for the month, total expenses for the month. Calculated via SQL GROUP BY month on transactions table.
+- **Time Period Selection**: UI STATE only - user's chosen analysis window stored in React state. Contains: period type (3mo/6mo/12mo/custom), custom start date (if applicable), custom end date (if applicable). No persistence required.
 
 ## Success Criteria *(mandatory)*
 
@@ -106,11 +111,12 @@ As a user, I want to select different time periods (3 months, 6 months, 12 month
 - **SC-002**: The lifestyle creep warning appears 100% of the time when expense growth exceeds income growth.
 - **SC-003**: The growth percentage calculations are accurate within 0.01% precision.
 - **SC-004**: 90% of users can correctly identify whether they have lifestyle creep after viewing the tracker for the first time without additional explanation.
-- **SC-005**: The chart renders without errors for all users with 2+ months of data.
+- **SC-005**: The chart renders without errors for all users with 3+ months of data.
+- **SC-006**: The `calculateGrowthPercentage()` utility function achieves 100% test coverage including all edge cases (division by zero, negative values, zero baseline).
 
 ## Assumptions
 
-- Users have existing income and expense transaction data in the system (minimum 2 months).
+- Users have existing income and expense transaction data in the system (minimum 3 months for meaningful analysis).
 - Income is defined as positive transactions to income-type accounts or categorized as income.
 - Expenses are defined as negative transactions (expense-type accounts) or transactions categorized as expenses.
 - Monthly aggregation is sufficient granularity for lifestyle creep detection.
