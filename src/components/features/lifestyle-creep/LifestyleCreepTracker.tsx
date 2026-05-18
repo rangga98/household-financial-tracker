@@ -39,24 +39,24 @@ export function LifestyleCreepTracker() {
   if (loading) {
     return (
       <div className="space-y-4">
-        <div className="h-8 bg-gray-200 rounded animate-pulse w-48" />
-        <div className="h-48 bg-gray-200 rounded animate-pulse" />
-        <div className="h-80 bg-gray-200 rounded animate-pulse" />
+        <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-48" />
+        <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+        <div className="h-80 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-        <p className="text-red-700">Error: {error}</p>
+      <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+        <p className="text-red-700 dark:text-red-400">Error: {error}</p>
       </div>
     );
   }
 
   if (!data) {
     return (
-      <div className="p-4 text-gray-500">
+      <div className="p-4 text-gray-500 dark:text-gray-400">
         No data available.
       </div>
     );
@@ -95,7 +95,7 @@ export function LifestyleCreepTracker() {
       )}
 
       {/* Period Info */}
-      <div className="text-xs text-gray-500 pt-4 border-t">
+      <div className="text-xs text-gray-500 dark:text-gray-400 pt-4 border-t dark:border-gray-700">
         Analysis period: {data.period.startDate} to {data.period.endDate}
         ({data.period.monthsAnalyzed} months analyzed)
       </div>

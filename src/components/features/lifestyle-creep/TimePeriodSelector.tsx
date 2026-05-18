@@ -16,14 +16,14 @@ const periods: { value: PeriodType; label: string }[] = [
 export function TimePeriodSelector({ value, onChange }: TimePeriodSelectorProps) {
   return (
     <div className="flex items-center gap-3">
-      <label htmlFor="period-select" className="text-sm font-medium text-gray-700">
+      <label htmlFor="period-select" className="text-sm font-medium text-gray-700 dark:text-gray-300">
         Analysis Period
       </label>
       <select
         id="period-select"
         value={value}
         onChange={(e) => onChange(e.target.value as PeriodType)}
-        className="px-3 py-2 border border-gray-300 rounded-md text-sm 
+        className="px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-800
                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
                    min-w-[150px] cursor-pointer touch-manipulation"
         style={{ minHeight: '44px' }} // Mobile touch target
